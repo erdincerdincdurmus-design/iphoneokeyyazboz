@@ -3,101 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pro Skor Bord</title>
+    <title>Yazboz Master</title>
     <style>
-        * { box-sizing: border-box; }
-        body { 
-            background-color: #0f172a; 
-            color: white; 
-            font-family: sans-serif; 
-            margin: 0; 
-            /* Yüksekliği sabitlemiyoruz, sayfanın doğal akışına bırakıyoruz */
-            overflow-y: auto;
-        }
-
-        .header { 
-            padding: 15px; 
-            background: #1e293b; 
-            text-align: center;
-            border-bottom: 1px solid #334155;
-        }
-
-        .main-container {
-            padding: 10px;
-            padding-bottom: 50px; /* En altta biraz boşluk bırakalım */
-        }
-
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #0f172a; color: white; font-family: -apple-system, sans-serif; margin: 0; padding: 0; }
+        .header { padding: 15px; background: #1e293b; text-align: center; border-bottom: 2px solid #334155; }
+        .main-container { padding: 8px; }
         table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #1e293b; border-radius: 12px; overflow: hidden; }
-        
-        th { background: #0f172a; padding: 12px 0; color: #93c5fd; font-size: 14px; }
-        td { padding: 5px 2px; border-bottom: 1px solid #334155; text-align: center; }
-        
-        .score-input { 
-            width: 90%; 
-            padding: 12px 0; 
-            border-radius: 8px; 
-            border: 2px solid transparent; 
-            background: #334155; 
-            color: white; 
-            text-align: center; 
-            font-weight: bold; 
-            font-size: 18px;
-            outline: none;
-        }
-        
-        .score-input:focus { border-color: #60a5fa; background: #0f172a; }
+        th { background: #0f172a; padding: 12px 0; color: #93c5fd; font-size: 14px; border: 1px solid #334155; }
+        td { padding: 5px 2px; border: 1px solid #334155; text-align: center; }
+        .row-info { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .edit-btn { background: #475569; border: none; color: white; padding: 6px; width: 36px; border-radius: 6px; font-size: 14px; }
+        .score-input { width: 92%; padding: 12px 0; border-radius: 8px; border: none; background: #334155; color: white; text-align: center; font-weight: bold; font-size: 18px; outline: none; appearance: none; }
         .score-input.negative { background: #059669 !important; }
-        
         .active-row { background: rgba(59, 130, 246, 0.2); }
-        .edit-btn { background: #475569; border: none; color: white; padding: 8px; border-radius: 6px; }
-
-        .total-row { background: #0f172a; color: #fbbf24; font-weight: bold; }
-        .total-row td { border-top: 2px solid #60a5fa; padding: 15px 0; font-size: 18px; }
-
-        /* BUTONLARIN OLDUĞU ALT PANEL - ARTIK SABİT DEĞİL */
-        .controls-wrapper {
-            margin-top: 20px;
-            background: #1e293b;
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid #334155;
-        }
-
+        .locked-row { background: rgba(0, 0, 0, 0.5) !important; opacity: 0.6; }
+        .total-row { background: #0f172a; color: #fbbf24; font-weight: bold; font-size: 20px; }
+        .controls-wrapper { margin-top: 15px; background: #1e293b; padding: 15px; border-radius: 15px; border: 1px solid #334155; }
         .multi-btns { display: flex; gap: 6px; margin-bottom: 12px; }
-        .btn { flex: 1; padding: 15px 5px; border: none; border-radius: 10px; font-weight: bold; color: white; font-size: 13px; }
-        .btn-red { background: #dc2626; }
-        .btn-slate { background: #475569; }
-        .btn-yellow { background: #ca8a04; }
-        .btn-blue { background: #2563eb; }
-
+        .btn { flex: 1; padding: 15px 5px; border: none; border-radius: 10px; font-weight: bold; color: white; font-size: 14px; cursor: pointer; }
+        .btn-red { background: #dc2626; } .btn-slate { background: #475569; } .btn-yellow { background: #ca8a04; } .btn-blue { background: #2563eb; }
         .award-section { display: flex; gap: 8px; align-items: center; }
-        #awardInput { width: 70px; padding: 12px; border-radius: 10px; border: none; text-align: center; font-size: 18px; background: #334155; color: white; }
-        .player-btns { display: flex; gap: 5px; flex: 1; }
+        #awardInput { width: 75px; padding: 12px; border-radius: 10px; border: none; text-align: center; font-size: 18px; background: #334155; color: white; outline: none; }
         .p-btn { background: #059669; padding: 12px; border-radius: 10px; font-size: 12px; border: none; color: white; flex: 1; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h3 style="margin:0; font-style:italic; color:#60a5fa;">PRO SKOR BORD</h3>
-    </div>
-
+    <div class="header"><h3 style="margin:0; font-style:italic; color:#60a5fa;">PRO YAZBOZ MASTER</h3></div>
     <div class="main-container">
         <table>
             <thead>
                 <tr>
-                    <th style="width: 45px;">Düz.</th>
-                    <th>P1</th><th>P2</th><th>P3</th><th>P4</th>
+                    <th style="width: 18%;">No</th>
+                    <th style="width: 20.5%;">P1</th>
+                    <th style="width: 20.5%;">P2</th>
+                    <th style="width: 20.5%;">P3</th>
+                    <th style="width: 20.5%;">P4</th>
                 </tr>
             </thead>
-            <tbody id="tableBody"></tbody>
+            <tbody id="tableBody">
+                <script>
+                    for(let i=0; i<11; i++) {
+                        document.write(`<tr id="row-${i}">
+                            <td><div class="row-info"><strong>${i+1}</strong><button class="edit-btn" onclick="setEditRow(${i})">✍️</button></div></td>
+                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p0" onfocus="highlightRow(${i})" oninput="calculateTotals()"></td>
+                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p1" onfocus="highlightRow(${i})" oninput="calculateTotals()"></td>
+                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p2" onfocus="highlightRow(${i})" oninput="calculateTotals()"></td>
+                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p3" onfocus="highlightRow(${i})" oninput="calculateTotals()"></td>
+                        </tr>`);
+                    }
+                </script>
+            </tbody>
             <tfoot>
-                <tr class="total-row">
-                    <td>TOP</td>
-                    <td id="tot0">0</td><td id="tot1">0</td><td id="tot2">0</td><td id="tot3">0</td>
-                </tr>
+                <tr class="total-row"><td>TOP</td><td id="tot0">0</td><td id="tot1">0</td><td id="tot2">0</td><td id="tot3">0</td></tr>
             </tfoot>
         </table>
-
         <div class="controls-wrapper">
             <div class="multi-btns">
                 <button class="btn btn-red" onclick="applyMulti(4)">4x</button>
@@ -108,7 +68,7 @@
             </div>
             <div class="award-section">
                 <input type="number" id="awardInput" placeholder="Ödül" inputmode="numeric">
-                <div class="player-btns">
+                <div style="display:flex; gap:5px; flex:1;">
                     <button class="p-btn" onclick="addAward(0)">P1</button>
                     <button class="p-btn" onclick="addAward(1)">P2</button>
                     <button class="p-btn" onclick="addAward(2)">P3</button>
@@ -117,68 +77,39 @@
             </div>
         </div>
     </div>
-
     <script>
-        let activeRow = 0;
-        const totalRows = 11;
-
-        function initTable() {
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
-            for (let i = 0; i < totalRows; i++) {
-                const tr = document.createElement('tr');
-                tr.id = 'row-' + i;
-                if (i === activeRow) tr.className = 'active-row';
-                tr.innerHTML = `<td><button class="edit-btn" onclick="setEditRow(${i})">✍️</button></td>` + 
-                    [0,1,2,3].map(p => `<td><input type="number" inputmode="numeric" class="score-input" id="r${i}p${p}" onfocus="highlightRow(${i})" oninput="calculateTotals()"></td>`).join('');
-                tbody.appendChild(tr);
-            }
-        }
-
-        function highlightRow(idx) {
-            document.querySelectorAll('tr').forEach(r => r.classList.remove('active-row'));
-            activeRow = idx;
-            document.getElementById('row-' + idx).classList.add('active-row');
-        }
-
-        function setEditRow(idx) {
-            highlightRow(idx);
-            document.getElementById(`r${idx}p0`).focus();
-        }
-
+        let activeRow = 0; let locks = Array(11).fill(false);
+        function highlightRow(idx) { document.querySelectorAll('tr').forEach(r => r.classList.remove('active-row')); activeRow = idx; document.getElementById('row-'+idx).classList.add('active-row'); }
+        function setEditRow(idx) { locks[idx] = false; document.getElementById('row-'+idx).classList.remove('locked-row'); highlightRow(idx); document.getElementById('r'+idx+'p0').focus(); calculateTotals(); }
         function calculateTotals() {
-            for (let p = 0; p < 4; p++) {
+            for(let p=0; p<4; p++) {
                 let sum = 0;
-                for (let r = 0; r < totalRows; r++) {
-                    let val = parseInt(document.getElementById(`r${r}p${p}`).value) || 0;
-                    sum += val;
-                    document.getElementById(`r${r}p${p}`).classList.toggle('negative', val < 0);
+                for(let r=0; r<11; r++) {
+                    let inp = document.getElementById('r'+r+'p'+p);
+                    let v = parseInt(inp.value) || 0; sum += v;
+                    inp.classList.toggle('negative', v < 0);
                 }
-                document.getElementById('tot' + p).innerText = sum;
+                document.getElementById('tot'+p).innerText = sum;
             }
         }
-
         function applyMulti(m) {
-            for (let p = 0; p < 4; p++) {
-                const input = document.getElementById(`r${activeRow}p${p}`);
-                let val = parseInt(input.value) || 0;
-                if (val > 0) input.value = val * m;
+            if(locks[activeRow]) return alert("Bu satır kilitli!");
+            let success = false;
+            for(let p=0; p<4; p++) {
+                let inp = document.getElementById('r'+activeRow+'p'+p);
+                let v = parseInt(inp.value) || 0; if(v > 0) { inp.value = v * m; success = true; }
             }
-            calculateTotals();
-            if(activeRow < totalRows - 1) setEditRow(activeRow + 1);
+            if(success) {
+                locks[activeRow] = true; document.getElementById('row-'+activeRow).classList.add('locked-row');
+                calculateTotals(); if(activeRow < 10) setEditRow(activeRow + 1);
+            }
         }
-
-        function addAward(pIdx) {
-            const award = document.getElementById('awardInput').value;
-            if (!award) return;
-            document.getElementById(`r${activeRow}p${pIdx}`).value = -Math.abs(parseInt(award));
-            calculateTotals();
-            document.getElementById('awardInput').value = '';
+        function addAward(p) {
+            let aw = document.getElementById('awardInput').value; if(!aw) return;
+            document.getElementById('r'+activeRow+'p'+p).value = -Math.abs(aw);
+            calculateTotals(); document.getElementById('awardInput').value = '';
         }
-
-        function resetGame() { if(confirm("Sıfırlansın mı?")) location.reload(); }
-
-        initTable();
+        function resetGame() { if(confirm("Tüm tablo silinsin mi?")) { location.reload(); } }
     </script>
 </body>
 </html>
