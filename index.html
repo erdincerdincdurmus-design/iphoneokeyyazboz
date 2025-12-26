@@ -3,33 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Yazboz Master</title>
+    <title>Yazboz Master Pro+</title>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background-color: #0f172a; color: white; font-family: -apple-system, sans-serif; margin: 0; padding: 0; }
-        .header { padding: 15px; background: #1e293b; text-align: center; border-bottom: 2px solid #334155; }
-        .main-container { padding: 8px; }
-        table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #1e293b; border-radius: 12px; overflow: hidden; }
-        th { background: #0f172a; padding: 12px 0; color: #93c5fd; font-size: 14px; border: 1px solid #334155; }
-        td { padding: 5px 2px; border: 1px solid #334155; text-align: center; }
-        .row-info { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .edit-btn { background: #475569; border: none; color: white; padding: 6px; width: 36px; border-radius: 6px; font-size: 14px; }
-        .score-input { width: 92%; padding: 12px 0; border-radius: 8px; border: none; background: #334155; color: white; text-align: center; font-weight: bold; font-size: 18px; outline: none; appearance: none; }
-        .score-input.negative { background: #059669 !important; }
-        .active-row { background: rgba(59, 130, 246, 0.2); }
+        .header { padding: 12px; background: #1e293b; text-align: center; border-bottom: 2px solid #334155; }
+        .main-container { padding: 5px; }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #1e293b; border-radius: 8px; overflow: hidden; }
+        th { background: #0f172a; padding: 10px 0; color: #93c5fd; font-size: 13px; border: 1px solid #334155; }
+        td { padding: 4px 1px; border: 1px solid #334155; text-align: center; vertical-align: middle; }
+        .row-info { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .edit-btn { background: #475569; border: none; color: white; padding: 4px; width: 32px; border-radius: 4px; font-size: 12px; }
+        .score-input { width: 94%; padding: 10px 0; border-radius: 6px; border: 2px solid transparent; background: #334155; color: white; text-align: center; font-weight: bold; font-size: 18px; outline: none; }
+        .score-input:focus { border-color: #60a5fa; background: #0f172a; }
+        .score-input.negative { background: #059669 !important; border-color: #059669; }
+        .active-row { background: rgba(59, 130, 246, 0.15); }
         .locked-row { background: rgba(0, 0, 0, 0.5) !important; opacity: 0.6; }
-        .total-row { background: #0f172a; color: #fbbf24; font-weight: bold; font-size: 20px; }
-        .controls-wrapper { margin-top: 15px; background: #1e293b; padding: 15px; border-radius: 15px; border: 1px solid #334155; }
-        .multi-btns { display: flex; gap: 6px; margin-bottom: 12px; }
-        .btn { flex: 1; padding: 15px 5px; border: none; border-radius: 10px; font-weight: bold; color: white; font-size: 14px; cursor: pointer; }
-        .btn-red { background: #dc2626; } .btn-slate { background: #475569; } .btn-yellow { background: #ca8a04; } .btn-blue { background: #2563eb; }
-        .award-section { display: flex; gap: 8px; align-items: center; }
-        #awardInput { width: 75px; padding: 12px; border-radius: 10px; border: none; text-align: center; font-size: 18px; background: #334155; color: white; outline: none; }
-        .p-btn { background: #059669; padding: 12px; border-radius: 10px; font-size: 12px; border: none; color: white; flex: 1; font-weight: bold; }
+        .total-row { background: #0f172a; color: #fbbf24; font-weight: bold; font-size: 18px; }
+        
+        .controls-wrapper { margin-top: 10px; background: #1e293b; padding: 10px; border-radius: 12px; border: 1px solid #334155; }
+        .multi-btns { display: flex; gap: 4px; margin-bottom: 12px; }
+        .btn { flex: 1; padding: 15px 2px; border: none; border-radius: 8px; font-weight: bold; color: white; font-size: 14px; }
+        
+        /* Renk Butonları */
+        .btn-red { background: #dc2626; } 
+        .btn-black { background: #334155; color: #f8fafc; border: 1px solid #475569; } 
+        .btn-yellow { background: #ca8a04; color: white; } 
+        .btn-blue { background: #2563eb; }
+        .btn-reset { background: #7f1d1d; flex: 0.5; }
+
+        .penalty-label { font-size: 12px; color: #94a3b8; margin-bottom: 8px; text-align: center; font-weight: bold; text-transform: uppercase; }
+        .penalty-grid { display: flex; gap: 6px; }
+        .p-btn { flex: 1; padding: 15px 0; border-radius: 10px; border: none; color: white; font-weight: bold; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+        .p-btn span { display: block; font-size: 10px; opacity: 0.8; }
     </style>
 </head>
 <body>
-    <div class="header"><h3 style="margin:0; font-style:italic; color:#60a5fa;">PRO YAZBOZ MASTER</h3></div>
+    <div class="header"><h3 style="margin:0; font-style:italic; color:#60a5fa;">PRO YAZBOZ MASTER+</h3></div>
     <div class="main-container">
         <table>
             <thead>
@@ -46,70 +56,115 @@
                     for(let i=0; i<11; i++) {
                         document.write(`<tr id="row-${i}">
                             <td><div class="row-info"><strong>${i+1}</strong><button class="edit-btn" onclick="setEditRow(${i})">✍️</button></div></td>
-                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p0" onfocus="highlightRow(${i})" oninput="calculateTotals()"></td>
-                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p1" onfocus="highlightRow(${i})" oninput="calculateTotals()"></td>
-                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p2" onfocus="highlightRow(${i})" oninput="calculateTotals()"></td>
-                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p3" onfocus="highlightRow(${i})" oninput="calculateTotals()"></td>
+                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p0" onfocus="setActive(0,${i})" oninput="calculateTotals()"></td>
+                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p1" onfocus="setActive(1,${i})" oninput="calculateTotals()"></td>
+                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p2" onfocus="setActive(2,${i})" oninput="calculateTotals()"></td>
+                            <td><input type="number" inputmode="numeric" class="score-input" id="r${i}p3" onfocus="setActive(3,${i})" oninput="calculateTotals()"></td>
                         </tr>`);
                     }
                 </script>
             </tbody>
             <tfoot>
-                <tr class="total-row"><td>TOP</td><td id="tot0">0</td><td id="tot1">0</td><td id="tot2">0</td><td id="tot3">0</td></tr>
+                <tr class="total-row">
+                    <td>TOP</td>
+                    <td id="tot0">0</td><td id="tot1">0</td><td id="tot2">0</td><td id="tot3">0</td>
+                </tr>
             </tfoot>
         </table>
+
         <div class="controls-wrapper">
+            <div class="penalty-label">Çarpanlar</div>
             <div class="multi-btns">
                 <button class="btn btn-red" onclick="applyMulti(4)">4x</button>
-                <button class="btn btn-slate" onclick="applyMulti(5)">5x</button>
+                <button class="btn btn-black" onclick="applyMulti(5)">5x</button>
                 <button class="btn btn-yellow" onclick="applyMulti(6)">6x</button>
                 <button class="btn btn-blue" onclick="applyMulti(7)">7x</button>
-                <button class="btn btn-red" style="flex:0.4" onclick="resetGame()">SİL</button>
+                <button class="btn btn-reset" onclick="resetGame()">SİL</button>
             </div>
-            <div class="award-section">
-                <input type="number" id="awardInput" placeholder="Ödül" inputmode="numeric">
-                <div style="display:flex; gap:5px; flex:1;">
-                    <button class="p-btn" onclick="addAward(0)">P1</button>
-                    <button class="p-btn" onclick="addAward(1)">P2</button>
-                    <button class="p-btn" onclick="addAward(2)">P3</button>
-                    <button class="p-btn" onclick="addAward(3)">P4</button>
-                </div>
+
+            <div class="penalty-label">Hızlı Ödül / Ceza Puanları</div>
+            <div class="penalty-grid">
+                <button class="p-btn btn-red" onclick="applyPenalty(40)">-40<span>KIRMIZI</span></button>
+                <button class="p-btn btn-black" onclick="applyPenalty(50)">-50<span>SİYAH</span></button>
+                <button class="p-btn btn-yellow" onclick="applyPenalty(60)">-60<span>SARI</span></button>
+                <button class="p-btn btn-blue" onclick="applyPenalty(70)">-70<span>MAVİ</span></button>
             </div>
         </div>
     </div>
+
     <script>
-        let activeRow = 0; let locks = Array(11).fill(false);
-        function highlightRow(idx) { document.querySelectorAll('tr').forEach(r => r.classList.remove('active-row')); activeRow = idx; document.getElementById('row-'+idx).classList.add('active-row'); }
-        function setEditRow(idx) { locks[idx] = false; document.getElementById('row-'+idx).classList.remove('locked-row'); highlightRow(idx); document.getElementById('r'+idx+'p0').focus(); calculateTotals(); }
+        let activeRow = 0;
+        let activePlayer = 0;
+        let locks = Array(11).fill(false);
+
+        function setActive(p, r) {
+            activePlayer = p;
+            activeRow = r;
+            document.querySelectorAll('tr').forEach(tr => tr.classList.remove('active-row'));
+            document.getElementById('row-' + r).classList.add('active-row');
+        }
+
+        function setEditRow(idx) {
+            locks[idx] = false;
+            document.getElementById('row-' + idx).classList.remove('locked-row');
+            setActive(0, idx);
+            document.getElementById(`r${idx}p0`).focus();
+            calculateTotals();
+        }
+
         function calculateTotals() {
-            for(let p=0; p<4; p++) {
+            for (let p = 0; p < 4; p++) {
                 let sum = 0;
-                for(let r=0; r<11; r++) {
-                    let inp = document.getElementById('r'+r+'p'+p);
-                    let v = parseInt(inp.value) || 0; sum += v;
+                for (let r = 0; r < 11; r++) {
+                    let inp = document.getElementById(`r${r}p${p}`);
+                    let v = parseInt(inp.value) || 0;
+                    sum += v;
                     inp.classList.toggle('negative', v < 0);
                 }
-                document.getElementById('tot'+p).innerText = sum;
+                document.getElementById('tot' + p).innerText = sum;
             }
         }
+
         function applyMulti(m) {
-            if(locks[activeRow]) return alert("Bu satır kilitli!");
-            let success = false;
-            for(let p=0; p<4; p++) {
-                let inp = document.getElementById('r'+activeRow+'p'+p);
-                let v = parseInt(inp.value) || 0; if(v > 0) { inp.value = v * m; success = true; }
+            if (locks[activeRow]) return alert("Bu satır kilitli!");
+            let hasValue = false;
+            for (let p = 0; p < 4; p++) {
+                let inp = document.getElementById(`r${activeRow}p${p}`);
+                let v = parseInt(inp.value) || 0;
+                if (v > 0) {
+                    inp.value = v * m;
+                    hasValue = true;
+                }
             }
-            if(success) {
-                locks[activeRow] = true; document.getElementById('row-'+activeRow).classList.add('locked-row');
-                calculateTotals(); if(activeRow < 10) setEditRow(activeRow + 1);
+            if (hasValue) {
+                locks[activeRow] = true;
+                document.getElementById('row-' + activeRow).classList.add('locked-row');
+                calculateTotals();
+                if (activeRow < 10) setEditRow(activeRow + 1);
             }
         }
-        function addAward(p) {
-            let aw = document.getElementById('awardInput').value; if(!aw) return;
-            document.getElementById('r'+activeRow+'p'+p).value = -Math.abs(aw);
-            calculateTotals(); document.getElementById('awardInput').value = '';
+
+        function applyPenalty(points) {
+            let targetInp = document.getElementById(`r${activeRow}p${activePlayer}`);
+            
+            // Hatalı giriş uyarısı: Hücre boş değilse uyarı ver
+            if (targetInp.value !== "" && targetInp.value !== "0") {
+                alert("Hatalı Giriş! Bu hücre dolu. Lütfen önce silin veya düzenle butonuyla kilidi açın.");
+                return;
+            }
+
+            targetInp.value = -Math.abs(points);
+            calculateTotals();
+            
+            // Ceza girildikten sonra satırı kilitlemek istersen aşağıdaki satırı aktif edebilirsin
+            // locks[activeRow] = true; document.getElementById('row-'+activeRow).classList.add('locked-row');
         }
-        function resetGame() { if(confirm("Tüm tablo silinsin mi?")) { location.reload(); } }
+
+        function resetGame() {
+            if (confirm("Tüm oyun sıfırlansın mı?")) {
+                location.reload();
+            }
+        }
     </script>
 </body>
 </html>
